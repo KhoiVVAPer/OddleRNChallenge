@@ -1,18 +1,16 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
-import TyposSample from './src/samples/TyposSample';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import Router from './src/navigation/Router';
+import {AppProvider} from './src/services/context/app';
 
 const App = () => {
-  return <TyposSample />;
+  return (
+    <AppProvider>
+      <SafeAreaProvider>
+        <Router />
+      </SafeAreaProvider>
+    </AppProvider>
+  );
 };
 
 export default App;
