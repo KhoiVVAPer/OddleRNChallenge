@@ -56,7 +56,8 @@ export default function Router() {
 
   const insets = useSafeAreaInsets();
 
-  const bsHeight = screenHeight - insets.top;
+  const bsHeight =
+    screenHeight - (Platform.OS === 'ios' ? insets.top : insets.top + 50);
 
   return (
     <NavigationContainer>
