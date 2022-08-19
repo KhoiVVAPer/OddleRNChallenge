@@ -2,6 +2,10 @@
 
 ## Install
 - Clone project.
+- Move to challenge features branch.
+ ```sh
+  git checktout challenge
+ ```
 - install packages
   ```sh
   yarn 
