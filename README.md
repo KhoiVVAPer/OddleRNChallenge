@@ -4,7 +4,7 @@
 - Clone project.
 - Move to challenge features branch.
  ```sh
-  git checktout challenge
+  git checkout challenge
  ```
 - install packages
   ```sh
