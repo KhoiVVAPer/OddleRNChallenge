@@ -6,7 +6,6 @@ import {styles} from './Favorites.styles';
 import {Product} from '../../models/Product';
 import {H1} from '../../components/Typography';
 import CardProduct from '../../components/CardProduct/CardProduct';
-import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import EmptyStateView from '../../components/EmptyState/EmptyState';
 
 type FavoritesViewProps = {
@@ -27,7 +26,7 @@ const FavoritesView: FC<FavoritesViewProps> = ({
     <SafeAreaView style={styles.container}>
       <FlatList
         keyExtractor={item => item.id}
-        refreshing={false}
+        refreshing={isLoading}
         onRefresh={onRefresh}
         ListHeaderComponent={() => (
           <View style={styles.header}>
@@ -44,10 +43,10 @@ const FavoritesView: FC<FavoritesViewProps> = ({
             image={emptyFavoriteImg}
           />
         }
+        showsVerticalScrollIndicator={false}
         data={listProduct}
         renderItem={({item}) => <CardProduct data={item} />}
       />
-      {isLoading && <LoadingOverlay />}
     </SafeAreaView>
   );
 };

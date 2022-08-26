@@ -66,5 +66,5 @@ export const styles = StyleSheet.create({
   orderBtnLabel: {
     color: '#FFFFFF',
   },
-  iconLikeWrapper: {marginTop: 5, marginLeft: 5},
+  iconLikeWrapper: {padding: 5},
 });

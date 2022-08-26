@@ -1,6 +1,5 @@
 import React, {FC, useContext, useState} from 'react';
 import {
-  Image,
   ImageBackground,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -19,6 +18,7 @@ import IconHeartOutlined from '../Icons/IconHeartOutlined';
 import {ProductContext} from '../../services/context/product';
 import {styles} from './styles';
 import {AppContext} from '../../services/context/app';
+import FastImage from 'react-native-fast-image';
 
 type CardProductProps = {
   data: Product;
@@ -74,9 +74,7 @@ const CardProduct: FC<CardProductProps> = ({
       } else {
         Linking.openURL(url);
       }
-    } catch (error) {
-      console.log('error', error);
-    }
+    } catch (error) {}
   };
 
   const handleOnViewBranch = () => {
@@ -103,7 +101,7 @@ const CardProduct: FC<CardProductProps> = ({
     <View style={styles.container}>
       <View style={styles.imageWrapper}>
         <TouchableWithoutFeedback onPress={handleDoubleTap}>
-          <Image
+          <FastImage
             source={{
               uri: `https:${data.apiFeaturedImage}`,
             }}

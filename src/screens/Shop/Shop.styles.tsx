@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   containerWrapper: {flex: 1, backgroundColor: '#FFFFFF'},
@@ -28,17 +28,19 @@ export const styles = StyleSheet.create({
   shadowLine: {
     width: '100%',
     height: 2.5,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    shadowOffset: {
-      width: 10,
-      height: 15,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5.84,
-
-    elevation: 15,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {width: 1, height: 3},
+        shadowOpacity: 0.2,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   hidden: {
     backgroundColor: 'transparent',
+    elevation: 0,
   },
 });

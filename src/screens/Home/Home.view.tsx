@@ -13,7 +13,6 @@ import {getWelcomeString} from '../../utils/string';
 import {UserInfo} from '../../models/User';
 import HorizontalListProduct from './HorizontalList/HorizontalList';
 import {Product} from '../../models/Product';
-import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 
 type HomeViewProps = {
   info: UserInfo;
@@ -41,8 +40,9 @@ const HomeView: FC<HomeViewProps> = ({
       <SafeAreaView style={styles.container}>
         <ImageBackground source={AppBG} style={styles.container}>
           <ScrollView
+            showsVerticalScrollIndicator={false}
             refreshControl={
-              <RefreshControl refreshing={false} onRefresh={onRefresh} />
+              <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
             }>
             <View style={styles.header}>
               <View style={styles.row}>
@@ -77,7 +77,6 @@ const HomeView: FC<HomeViewProps> = ({
             </View>
           </ScrollView>
         </ImageBackground>
-        {isLoading && <LoadingOverlay />}
       </SafeAreaView>
     </View>
   );

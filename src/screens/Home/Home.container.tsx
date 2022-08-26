@@ -3,7 +3,6 @@ import HomeView from './Home.view';
 import {APP_ACCOUNT_NAME} from '@env';
 import {ProductContext} from '../../services/context/product';
 import {uppercaseFirstLetter} from '../../utils/string';
-import {useFocusEffect} from '@react-navigation/native';
 
 const avatar = require('../../../assets/images/avatar.png');
 
@@ -22,13 +21,6 @@ const HomeScreen: FC = (): JSX.Element => {
     listProductWithMostLikedBrand.length > 0
       ? uppercaseFirstLetter(listProductWithMostLikedBrand[0]?.brand)
       : 'N/A';
-
-  useFocusEffect(
-    React.useCallback(() => {
-      loadDataHome();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
-  );
 
   return (
     <HomeView

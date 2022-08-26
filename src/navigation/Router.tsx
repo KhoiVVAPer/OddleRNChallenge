@@ -6,8 +6,8 @@ import ShopScreen from '../screens/Shop/Shop.container';
 import FavoritesScreen from '../screens/Favorites/Favorites.container';
 import IconAddressBookActive from '../components/Icons/IconAddressBookActive';
 import IconAddressBookInactive from '../components/Icons/IconAddressBookInactive';
-import IconHeart from '../components/Icons/IconHeart';
-import IconHeartOutlined from '../components/Icons/IconHeartOutlined';
+import IconHeartLarge from '../components/Icons/IconHeartLarge';
+import IconHeartOutlinedLarge from '../components/Icons/IconHeartOutLinedLarge';
 import IconInformation from '../components/Icons/IconInformation';
 import IconMinOrder from '../components/Icons/IconMinOrder';
 import IconShopActive from '../components/Icons/IconShopActive';
@@ -28,8 +28,8 @@ const icons: {
 } = {
   IconAddressBookActive,
   IconAddressBookInactive,
-  IconHeart,
-  IconHeartOutlined,
+  IconHeartLarge,
+  IconHeartOutlinedLarge,
   IconInformation,
   IconMinOrder,
   IconShopActive,
@@ -60,12 +60,14 @@ export default function Router() {
     screenHeight - (Platform.OS === 'ios' ? insets.top : insets.top + 50);
 
   return (
-    <NavigationContainer>
-      <ProductProvider>
+    <ProductProvider>
+      <NavigationContainer>
         <Tab.Navigator
           screenOptions={({route}) => ({
             headerShown: false,
-            tabBarStyle: {height: Platform.OS === 'ios' ? 100 : 70},
+            tabBarStyle: {
+              height: Platform.OS === 'ios' ? 100 : 70,
+            },
             tabBarLabelStyle: {
               fontSize: 10,
               lineHeight: 12,
@@ -81,11 +83,9 @@ export default function Router() {
               } else if (route.name === 'Shop') {
                 item = focused ? 'IconShopActive' : 'IconShopInactive';
               } else if (route.name === 'Favorites') {
-                item = focused ? 'IconHeart' : 'IconHeartOutlined';
+                item = focused ? 'IconHeartLarge' : 'IconHeartOutlinedLarge';
               }
-
               const Icon = icons[item];
-
               return <Icon />;
             },
           })}>
@@ -116,8 +116,8 @@ export default function Router() {
           )}
           onCloseEnd={onCloseBS}
         />
-      </ProductProvider>
-    </NavigationContainer>
+      </NavigationContainer>
+    </ProductProvider>
   );
 }
 

@@ -1,12 +1,5 @@
-import React, {FC, useState} from 'react';
-import {
-  FlatList,
-  Image,
-  ImageBackground,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  View,
-} from 'react-native';
+import React, {FC, useCallback, useMemo} from 'react';
+import {FlatList, Image, ImageBackground, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CardProduct from '../../components/CardProduct/CardProduct';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
@@ -36,17 +29,13 @@ const ShopView: FC<ShopViewProps> = ({
   totalProductCount,
 }: ShopViewProps): JSX.Element => {
   const shortName = userInfo.name ? userInfo.name.slice(0, 8) : 'N/A';
-  const [isShowHeaderShadow, setIsShowHeaderShadow] = useState<boolean>(false);
 
-  const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (e.nativeEvent.contentOffset.y > 0 && !isShowHeaderShadow) {
-      // case when user just started scrolling down from the top
-      setIsShowHeaderShadow(true);
-    } else if (e.nativeEvent.contentOffset.y <= 0 && isShowHeaderShadow) {
-      // case when the user scrolls back to the top
-      setIsShowHeaderShadow(false);
-    }
-  };
+  const keyExtractor = useCallback((item: Product) => item.id.toString(), []);
+
+  const renderItem = ({item}: any) => <CardProduct data={item} />;
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const memoizedValue = useMemo(() => renderItem, [listProduct]);
 
   return (
     <View style={styles.containerWrapper}>
@@ -65,29 +54,24 @@ const ShopView: FC<ShopViewProps> = ({
               </View>
             </View>
           </View>
-          <View
-            style={[styles.shadowLine, !isShowHeaderShadow && styles.hidden]}
+          <View style={styles.shadowLine} />
+          <FlatList
+            keyExtractor={keyExtractor}
+            ListHeaderComponent={() => (
+              <View style={styles.headerProductCount}>
+                <SParagraph>
+                  {`${totalProductCount} products sorted by price`}
+                </SParagraph>
+              </View>
+            )}
+            onEndReached={onLoadMore}
+            onEndReachedThreshold={0.1}
+            data={listProduct}
+            onRefresh={onRefresh}
+            refreshing={isLoading}
+            renderItem={memoizedValue}
           />
-          {listProduct.length > 0 && (
-            <FlatList
-              keyExtractor={item => item.id}
-              ListHeaderComponent={() => (
-                <View style={styles.headerProductCount}>
-                  <SParagraph>
-                    {`${totalProductCount} products sorted by price`}
-                  </SParagraph>
-                </View>
-              )}
-              onScroll={onScroll}
-              onEndReached={onLoadMore}
-              data={listProduct}
-              onRefresh={onRefresh}
-              refreshing={false}
-              renderItem={({item}) => <CardProduct data={item} />}
-            />
-          )}
         </ImageBackground>
-        {isLoading && <LoadingOverlay />}
       </SafeAreaView>
     </View>
   );
